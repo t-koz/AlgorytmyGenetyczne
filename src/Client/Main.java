@@ -30,7 +30,7 @@ public class Main {
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
                 //TODO: send specific object
                 outputStream.writeObject("Here comes parameters!");
-                //receiver
+                //receive
                 inputStream = new ObjectInputStream(socket.getInputStream());
                 outputArray = (double[][]) inputStream.readObject();
                 socket.close();
