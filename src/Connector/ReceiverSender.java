@@ -1,6 +1,4 @@
-package PopulationGenerator;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+package Connector;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
