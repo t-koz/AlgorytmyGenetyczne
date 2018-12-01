@@ -19,18 +19,18 @@ public class Main {
         ObjectOutputStream outputStream;
         boolean isConnected = false;
         double [][] outputArray = new double[PopulationCount][3];
-        //TODO create object to send
+        Parameters parameters;
+        parameters = new Parameters(F, CR, PopulationCount, Generations, AlgoritmType.DE, false);
 
         while (!isConnected){
             try{
                 socket = new Socket("localHost", 4445);
                 System.out.println("Connected!");
                 isConnected = true;
-                //sending
+                //sending parameters
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
-                //TODO: send specific object
-                outputStream.writeObject("Here comes parameters!");
-                //receive
+                outputStream.writeObject(parameters);
+                //receive result
                 inputStream = new ObjectInputStream(socket.getInputStream());
                 outputArray = (double[][]) inputStream.readObject();
                 socket.close();

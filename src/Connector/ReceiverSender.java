@@ -1,5 +1,7 @@
 package Connector;
 
+import Client.Parameters;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,16 +14,9 @@ public class ReceiverSender {
         Socket socket;
         ObjectInputStream inputStream;
         ObjectOutputStream outputStream;
-        String receivedText;
+        Parameters parameters;
         boolean isConnected = false;
-        //TODO get array size from received object
-        int TempPopulationCount = 10;
-        double [][] arrayToSendForClient = new double[TempPopulationCount][3];
-        //TODO delete this hardcoded array
-        arrayToSendForClient[0] = new double[]{1, 1, 1};
-        arrayToSendForClient[3] = new double[]{2, 2, 2};
-        arrayToSendForClient[1] = new double[]{0, 0, 0};
-        arrayToSendForClient[2] = new double[]{5.6, 0.22, 0.33};
+        double [][] arrayToSendForClient;
 
         while (!isConnected) {
             try {
@@ -29,11 +24,12 @@ public class ReceiverSender {
                 socket = serverSocket.accept();
                 System.out.println("Connected to client!");
                 isConnected = true;
-                //receiving
+                //receiving parameters
                 inputStream = new ObjectInputStream(socket.getInputStream());
-                receivedText = (String) inputStream.readObject();
-                System.out.println(receivedText);
-                //send
+                parameters = (Parameters) inputStream.readObject();
+                
+                arrayToSendForClient = new double[parameters.getPopulationCount()][];
+                //send result
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(arrayToSendForClient);
                 //close
