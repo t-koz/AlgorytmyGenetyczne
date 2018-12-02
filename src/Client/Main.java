@@ -1,9 +1,11 @@
 package Client;
 
+import Common.AlgoritmType;
+import Common.Parameters;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -25,12 +27,13 @@ public class Main {
         while (!isConnected){
             try{
                 socket = new Socket("localHost", 4445);
-                System.out.println("Connected!");
+                System.out.println("Connected with Connector!");
                 isConnected = true;
                 //sending parameters
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(parameters);
                 //receive result
+                socket = new Socket("localHost", 4665);
                 inputStream = new ObjectInputStream(socket.getInputStream());
                 outputArray = (double[][]) inputStream.readObject();
                 socket.close();

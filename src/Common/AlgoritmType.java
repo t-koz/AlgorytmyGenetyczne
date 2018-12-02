@@ -1,4 +1,4 @@
-package Client;
+package Common;
 
 public enum AlgoritmType {
     DE, SA;

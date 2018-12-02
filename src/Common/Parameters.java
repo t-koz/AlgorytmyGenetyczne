@@ -1,6 +1,8 @@
-package Client;
+package Common;
 
-public class Parameters {
+import java.io.Serializable;
+
+public class Parameters implements Serializable {
     double F;
     double CR;
     int PopulationCount;
