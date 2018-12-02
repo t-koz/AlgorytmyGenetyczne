@@ -9,10 +9,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 class Main {
-    private double F;
-    private double CR;
-    private int PopulationCount;
-    private int Generation;
     static private Parameters parameters;
 
     public static void main(String[] args) {
@@ -21,7 +17,7 @@ class Main {
         Socket socket;
         ObjectInputStream inputStream;
         ObjectOutputStream outputStream;
-        double [][] outputArray;
+        double[][] outputArray;
 
         while (!isConnected) {
             try {
@@ -31,7 +27,6 @@ class Main {
                 isConnected = true;
                 inputStream = new ObjectInputStream(socket.getInputStream());
                 parameters = (Parameters) inputStream.readObject();
-                System.out.println(parameters.getPopulationCount() + "aaaa");
                 outputArray = new double[parameters.getPopulationCount()][];
                 //TODO: generate new population and copy it to array
                 outputArray[0] = new double[]{1, 1, 1};
@@ -46,7 +41,7 @@ class Main {
 
             } catch (IOException e) {
                 e.printStackTrace();
-            }catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
