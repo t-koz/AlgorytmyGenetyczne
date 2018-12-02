@@ -16,7 +16,6 @@ public class Connector {
 
 
     public static void main(String[] args) {
-        isConnected = false;
         GetParameterFromClient();
         SendParametersToDE();
         SendResultToClient();
