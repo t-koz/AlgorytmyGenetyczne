@@ -14,6 +14,18 @@ public class Parameters implements Serializable {
         return PopulationCount;
     }
 
+    public double getF() {
+        return F;
+    }
+
+    public double getCR() {
+        return CR;
+    }
+
+    public int getGenerations() {
+        return Generations;
+    }
+
     public Parameters(double F, double CR, int PopulationCount, int Generations, AlgoritmType type, boolean withGraph){
         this.F = F;
         this.CR = CR;

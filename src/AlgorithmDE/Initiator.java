@@ -12,6 +12,7 @@ public class Initiator {
     public Initiator(Parameters parameters){
         this.parameters = parameters;
         this.populationCount = parameters.getPopulationCount();
+        generation = new Generation(parameters.getF(), parameters.getCR(), parameters.getPopulationCount(), parameters.getGenerations());
         generation.GenerateResultPopulation();
     }
     double [][] ConvertListToOutputArray(){

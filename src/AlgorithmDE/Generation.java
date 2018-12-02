@@ -2,6 +2,7 @@ package AlgorithmDE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Generation {
     private List<Point> ActualPopulation = new ArrayList<>();
@@ -21,6 +22,14 @@ public class Generation {
     }
 
     public void GenerateResultPopulation() {
-        
+        GenerateRandomPopulation(PopulationCount);
+    }
+
+    private void GenerateRandomPopulation(int Population) {
+        Random random = new Random();
+        for (int i = 0; i < Population; i++){
+            ActualPopulation.add(new Point(random.nextDouble(), random.nextDouble()));
+        }
+
     }
 }
