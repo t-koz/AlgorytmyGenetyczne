@@ -7,6 +7,7 @@ import java.util.Random;
 public class Generation {
     private List<Point> InitialPopulation = new ArrayList<>();
     private List<Point> TemporaryPopulation = new ArrayList<>();
+    private List<Point> AfterCrossGeneration = new ArrayList<>();
     private double F;
     private double CR;
     private int PopulationCount;
@@ -25,6 +26,27 @@ public class Generation {
     public void GenerateResultPopulation() {
         GenerateRandomPopulation(PopulationCount);
         MutateGeneration();
+        CrossGeneration();
+    }
+
+    private void CrossGeneration() {
+        Random random = new Random();
+        for (int i = 0, j = 1; i < PopulationCount; i++, j++){
+            if (random.nextDouble() <= CR){
+                CrossTwoPoints(InitialPopulation.get(i), InitialPopulation.get(j));
+            }
+            else{
+                AfterCrossGeneration.add(InitialPopulation.get(i));
+                AfterCrossGeneration.add(InitialPopulation.get(j));
+            }
+        }
+    }
+
+    private void CrossTwoPoints(Point firstPoint, Point secondPoint) {
+        Random random = new Random();
+        //TODO cross this two points
+        AfterCrossGeneration.add(firstPoint);
+        AfterCrossGeneration.add(secondPoint);
     }
 
     private void MutateGeneration() {
