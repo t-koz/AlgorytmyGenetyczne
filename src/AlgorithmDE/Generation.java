@@ -1,5 +1,7 @@
 package AlgorithmDE;
 
+import sun.management.Agent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -31,7 +33,7 @@ public class Generation {
 
     private void CrossGeneration() {
         Random random = new Random();
-        for (int i = 0, j = 1; i < PopulationCount - 1; i++, j++){
+        for (int i = 0, j = 1; i < PopulationCount - 1; i+=2, j+=2){
             if (random.nextDouble() <= CR){
                 CrossTwoPoints(InitialPopulation.get(i), InitialPopulation.get(j));
             }
@@ -44,9 +46,13 @@ public class Generation {
 
     private void CrossTwoPoints(Point firstPoint, Point secondPoint) {
         Random random = new Random();
-        //TODO cross this two points
-        AfterCrossGeneration.add(firstPoint);
-        AfterCrossGeneration.add(secondPoint);
+        int locus = random.nextInt(9) + 3;
+        String firstX = String.valueOf(firstPoint.getX()).substring(0, locus) + String.valueOf(secondPoint.getX()).substring(locus);
+        String secondX = String.valueOf(secondPoint.getX()).substring(0, locus) + String.valueOf(firstPoint.getX()).substring(locus);
+        String firstY = String.valueOf(firstPoint.getY()).substring(0, locus) + String.valueOf(secondPoint.getY()).substring(locus);
+        String secondY = String.valueOf(secondPoint.getY()).substring(0, locus) + String.valueOf(firstPoint.getY()).substring(locus);
+        AfterCrossGeneration.add(new Point(Double.valueOf(firstX), Double.valueOf(firstY)));
+        AfterCrossGeneration.add(new Point(Double.valueOf(secondX), Double.valueOf(secondY)));
     }
 
     private void MutateGeneration() {
