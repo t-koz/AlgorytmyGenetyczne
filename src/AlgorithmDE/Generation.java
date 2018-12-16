@@ -31,7 +31,7 @@ public class Generation {
 
     private void CrossGeneration() {
         Random random = new Random();
-        for (int i = 0, j = 1; i < PopulationCount; i++, j++){
+        for (int i = 0, j = 1; i < PopulationCount - 1; i++, j++){
             if (random.nextDouble() <= CR){
                 CrossTwoPoints(InitialPopulation.get(i), InitialPopulation.get(j));
             }

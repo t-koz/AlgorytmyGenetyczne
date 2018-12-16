@@ -1,12 +1,16 @@
 package AlgorithmDE;
 
+import java.text.DecimalFormat;
+
 public class Point {
     public double X;
     public double Y;
+    DecimalFormat df = new DecimalFormat("0.0000000000");
+
 
     public Point(double X, double Y){
-        this.X = X;
-        this.Y = Y;
+        this.X = Double.valueOf(df.format(X));
+        this.Y = Double.valueOf(df.format(Y));
     }
 
     public double getRosenBrock() {
