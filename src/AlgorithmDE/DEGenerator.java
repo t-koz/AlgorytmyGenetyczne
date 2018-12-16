@@ -15,7 +15,7 @@ class Main {
         boolean isConnected = false;
         ServerSocket serverSocket;
         Socket socket;
-        Initiator initiator;
+        ResultGetter resultGetter;
         ObjectInputStream inputStream;
         ObjectOutputStream outputStream;
         double[][] outputArray;
@@ -29,8 +29,8 @@ class Main {
                 inputStream = new ObjectInputStream(socket.getInputStream());
                 parameters = (Parameters) inputStream.readObject();
                 //TODO: generate new population and copy it to array
-                initiator = new Initiator(parameters);
-                outputArray = initiator.ConvertListToOutputArray();
+                resultGetter = new ResultGetter(parameters);
+                outputArray = resultGetter.GetOutputPopulationInArray();
                 //sending result
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(outputArray);

@@ -4,18 +4,18 @@ package AlgorithmDE;
 import Common.Parameters;
 import java.util.List;
 
-public class Initiator {
+public class ResultGetter {
     Parameters parameters;
     Generation generation;
     int populationCount;
 
-    public Initiator(Parameters parameters){
+    public ResultGetter(Parameters parameters){
         this.parameters = parameters;
         this.populationCount = parameters.getPopulationCount();
         generation = new Generation(parameters.getF(), parameters.getCR(), parameters.getPopulationCount(), parameters.getGenerations());
         generation.GenerateResultPopulation();
     }
-    double [][] ConvertListToOutputArray(){
+    double [][] GetOutputPopulationInArray(){
         List<Point> listPoints = generation.getActualPopulation();
         double [][] ArrayPoints = new double[populationCount][];
         int counter = 0;

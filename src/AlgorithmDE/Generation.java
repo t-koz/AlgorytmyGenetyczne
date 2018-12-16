@@ -5,14 +5,15 @@ import java.util.List;
 import java.util.Random;
 
 public class Generation {
-    private List<Point> ActualPopulation = new ArrayList<>();
+    private List<Point> InitialPopulation = new ArrayList<>();
+    private List<Point> TemporaryPopulation = new ArrayList<>();
     private double F;
     private double CR;
     private int PopulationCount;
     private int Repeats;
 
     public List<Point> getActualPopulation() {
-        return ActualPopulation;
+        return InitialPopulation;
     }
     public Generation(double F, double CR, int PopulationCount, int Repeats){
         this.F = F;
@@ -23,13 +24,35 @@ public class Generation {
 
     public void GenerateResultPopulation() {
         GenerateRandomPopulation(PopulationCount);
+        MutateGeneration();
+    }
+
+    private void MutateGeneration() {
+        for (int i = 0; i < PopulationCount; i++){
+            TemporaryPopulation.add(MakeNewMutatedUnit(InitialPopulation.get(i), i));
+        }
+    }
+
+    private Point MakeNewMutatedUnit(Point iteratedPoint, int i) {
+        Random random = new Random();
+        int firstIndex = random.nextInt(PopulationCount);
+        int secondIndex = random.nextInt(PopulationCount);
+        while (firstIndex == i){
+            firstIndex = random.nextInt(PopulationCount);
+        }
+        while (secondIndex == i || secondIndex == firstIndex){
+            secondIndex = random.nextInt(PopulationCount);
+        }
+        double x = iteratedPoint.getX() + (F*(InitialPopulation.get(firstIndex).getX() - InitialPopulation.get(secondIndex).getX()));
+        double y = iteratedPoint.getY() + (F*(InitialPopulation.get(firstIndex).getY() - InitialPopulation.get(secondIndex).getY()));
+        return new Point(x, y);
     }
 
     private void GenerateRandomPopulation(int Population) {
         Random random = new Random();
         for (int i = 0; i < Population; i++){
-            ActualPopulation.add(new Point(random.nextDouble(), random.nextDouble()));
+            InitialPopulation.add(new Point(random.nextDouble(), random.nextDouble()));
         }
-
     }
+
 }
