@@ -29,6 +29,25 @@ public class Generation {
         GenerateRandomPopulation(PopulationCount);
         MutateGeneration();
         CrossGeneration();
+        InitialPopulation = Selection();
+        clearLists();
+    }
+
+    private void clearLists() {
+        TemporaryPopulation.clear();
+        AfterCrossGeneration.clear();
+    }
+
+    private List<Point> Selection() {
+        List<Point> tempList = new ArrayList<>();
+        for (int i = 0; i < PopulationCount; i++){
+            if (Math.abs(InitialPopulation.get(i).getRosenBrock()) < Math.abs(AfterCrossGeneration.get(i).getRosenBrock())){
+                tempList.add(InitialPopulation.get(i));
+            }else{
+                tempList.add(AfterCrossGeneration.get(i));
+            }
+        }
+        return tempList;
     }
 
     private void CrossGeneration() {
