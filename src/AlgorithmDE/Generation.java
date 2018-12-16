@@ -27,10 +27,12 @@ public class Generation {
 
     public void GenerateResultPopulation() {
         GenerateRandomPopulation(PopulationCount);
-        MutateGeneration();
-        CrossGeneration();
-        InitialPopulation = Selection();
-        clearLists();
+        for (int i = 0; i < Repeats; i++){
+            MutateGeneration();
+            CrossGeneration();
+            InitialPopulation = Selection();
+            clearLists();
+        }
     }
 
     private void clearLists() {
