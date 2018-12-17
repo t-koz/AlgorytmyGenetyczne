@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 public class Point {
     public double X;
     public double Y;
-    DecimalFormat df = new DecimalFormat("0.0000000000");
+    DecimalFormat df = new DecimalFormat("+#,##0.0000000000;-#");
 
 
     public Point(double X, double Y){

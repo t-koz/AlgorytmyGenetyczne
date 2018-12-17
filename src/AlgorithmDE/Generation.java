@@ -2,6 +2,7 @@ package AlgorithmDE;
 
 import sun.management.Agent;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +15,7 @@ public class Generation {
     private double CR;
     private int PopulationCount;
     private int Repeats;
+    DecimalFormat df = new DecimalFormat("+#,##0.0000000000;-#");
 
     public List<Point> getActualPopulation() {
         return InitialPopulation;
@@ -56,24 +58,31 @@ public class Generation {
         Random random = new Random();
         for (int i = 0, j = 1; i < PopulationCount - 1; i+=2, j+=2){
             if (random.nextDouble() <= CR){
-                CrossTwoPoints(InitialPopulation.get(i), InitialPopulation.get(j));
+                CrossTwoPoints(TemporaryPopulation.get(i), TemporaryPopulation.get(j));
             }
             else{
-                AfterCrossGeneration.add(InitialPopulation.get(i));
-                AfterCrossGeneration.add(InitialPopulation.get(j));
+                AfterCrossGeneration.add(TemporaryPopulation.get(i));
+                AfterCrossGeneration.add(TemporaryPopulation.get(j));
             }
         }
     }
 
     private void CrossTwoPoints(Point firstPoint, Point secondPoint) {
         Random random = new Random();
-        int locus = random.nextInt(9) + 3;
-        String firstX = String.valueOf(firstPoint.getX()).substring(0, locus) + String.valueOf(secondPoint.getX()).substring(locus);
-        String secondX = String.valueOf(secondPoint.getX()).substring(0, locus) + String.valueOf(firstPoint.getX()).substring(locus);
-        String firstY = String.valueOf(firstPoint.getY()).substring(0, locus) + String.valueOf(secondPoint.getY()).substring(locus);
-        String secondY = String.valueOf(secondPoint.getY()).substring(0, locus) + String.valueOf(firstPoint.getY()).substring(locus);
-        AfterCrossGeneration.add(new Point(Double.valueOf(firstX), Double.valueOf(firstY)));
-        AfterCrossGeneration.add(new Point(Double.valueOf(secondX), Double.valueOf(secondY)));
+        int locus = random.nextInt(8) + 3;
+        try{
+
+            String firstX = String.valueOf(df.format(firstPoint.getX())).substring(0, locus) + String.valueOf(df.format(secondPoint.getX())).substring(locus);
+            String secondX = String.valueOf(df.format(secondPoint.getX())).substring(0, locus) + String.valueOf(df.format(firstPoint.getX())).substring(locus);
+            String firstY = String.valueOf(df.format(firstPoint.getY())).substring(0, locus) + String.valueOf(df.format(secondPoint.getY())).substring(locus);
+            String secondY = String.valueOf(df.format(secondPoint.getY())).substring(0, locus) + String.valueOf(df.format(firstPoint.getY())).substring(locus);
+            AfterCrossGeneration.add(new Point(Double.valueOf(firstX), Double.valueOf(firstY)));
+            AfterCrossGeneration.add(new Point(Double.valueOf(secondX), Double.valueOf(secondY)));
+        }catch (StringIndexOutOfBoundsException e){
+            e.printStackTrace();
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }
     }
 
     private void MutateGeneration() {
