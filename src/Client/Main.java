@@ -23,7 +23,7 @@ public class Main {
         boolean isConnected = false;
         double[][] outputArray = new double[PopulationCount][3];
         Parameters parameters;
-        parameters = new Parameters(F, CR, PopulationCount, Generations, AlgoritmType.DE, false, fun);
+        parameters = new Parameters(F, CR, PopulationCount, Generations, AlgoritmType.SA, false, fun);
 
         //sending parameters
         System.out.printf("Waiting for connector...");

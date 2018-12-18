@@ -32,6 +32,10 @@ public class Parameters implements Serializable {
         return Generations;
     }
 
+    public AlgoritmType GetAlgoritmType(){
+        return type;
+    }
+
     public Parameters(double F, double CR, int PopulationCount, int Generations, AlgoritmType type, boolean withGraph, OptimizationFunctions fun) {
         this.F = F;
         this.CR = CR;
