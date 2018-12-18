@@ -121,8 +121,20 @@ public class Generation {
 
     private void GenerateRandomPopulation(int Population) {
         Random random = new Random();
+        double rangeMax = setRangeForRandomGeneratedNumbers();
+        double rangeMin = -rangeMax;
         for (int i = 0; i < Population; i++) {
-            InitialPopulation.add(new Point(random.nextDouble(), random.nextDouble()));
+            InitialPopulation.add(new Point(rangeMin +(rangeMax - rangeMin) * random.nextDouble(),rangeMin +(rangeMax - rangeMin) * random.nextDouble()));
+        }
+    }
+
+    private double setRangeForRandomGeneratedNumbers() {
+        switch (functionType){
+            case Rosenbrock:
+                return 1;
+            case Beale:
+                return 4.5;
+                default: return 1;
         }
     }
 }
