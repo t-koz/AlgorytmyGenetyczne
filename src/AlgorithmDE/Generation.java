@@ -128,6 +128,8 @@ public class Generation {
                 return 4.5;
             case Booth:
                 return 3.1;
+            case Matyas:
+                return 2;
             default: return 1;
         }
     }

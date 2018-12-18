@@ -14,7 +14,7 @@ public class Main {
     private static double CR = 0.3;
     private static int PopulationCount = 20;
     private static int Generations = 50;
-    private static OptimizationFunctions fun = OptimizationFunctions.Booth;
+    private static OptimizationFunctions fun = OptimizationFunctions.Matyas;
 
     public static void main(String[] args) {
         Socket socket;

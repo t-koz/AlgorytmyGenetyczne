@@ -28,8 +28,16 @@ public class Point {
                 return getBeale();
             case Booth:
                 return getBooth();
+            case Matyas:
+                return getMatyas();
             default: return 0;
         }
+    }
+
+    private double getMatyas() {
+        double first = 0.26 * (Math.pow(getX(), 2) + Math.pow(getY(), 2));
+        double second = 0.48 * getX() * getY();
+        return  first - second;
     }
 
     private double getBooth() {
