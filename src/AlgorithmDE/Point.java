@@ -1,6 +1,5 @@
 package AlgorithmDE;
 
-import Common.AlgoritmType;
 import Common.OptimizationFunctions;
 
 import java.text.DecimalFormat;
@@ -26,9 +25,24 @@ public class Point {
             case Rosenbrock:
                 return getRosenBrock();
             case Beale:
-                return 2;
+                return getBeale();
+            case Booth:
+                return getBooth();
             default: return 0;
         }
+    }
+
+    private double getBooth() {
+        double first = Math.pow(getX() + 2 * getY() - 7, 2);
+        double second = Math.pow(2 * getX() + getY() - 5, 2);
+        return first + second;
+    }
+
+    private double getBeale() {
+        double first = Math.pow(1.5 - getX() * getY(), 2);
+        double second = Math.pow(2.25 - getX() + getX() * Math.pow(getY(), 2), 2);
+        double third  = Math.pow(2.625 - getX() + getX() * Math.pow(getY(), 3), 2);
+        return first + second + third;
     }
 
     public double getX() {

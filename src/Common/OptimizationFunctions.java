@@ -1,5 +1,5 @@
 package Common;
 
 public enum OptimizationFunctions {
-    Rosenbrock, Beale
+    Rosenbrock, Beale, Booth
 }

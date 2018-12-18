@@ -55,17 +55,9 @@ public class Generation {
     }
 
     private Point SaveBetterUnit(Point point1, Point point2, OptimizationFunctions functionType) {
-        switch (functionType){
-            case Rosenbrock:
-                if (Math.abs(point1.getResult(functionType)) < Math.abs(point2.getResult(functionType))){
-                    return point1;
-                }return point2;
-            case Beale:
-                if (Math.abs(point1.getResult(functionType)) < Math.abs(point2.getResult(functionType))){
-                    return point1;
-                }return point2;
-                default: return null;
-        }
+        if (Math.abs(point1.getResult(functionType)) < Math.abs(point2.getResult(functionType))){
+            return point1;
+        }return point2;
     }
 
     private void CrossGeneration() {
@@ -134,7 +126,9 @@ public class Generation {
                 return 1;
             case Beale:
                 return 4.5;
-                default: return 1;
+            case Booth:
+                return 3.1;
+            default: return 1;
         }
     }
 }
