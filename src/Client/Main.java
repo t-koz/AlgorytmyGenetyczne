@@ -1,6 +1,7 @@
 package Client;
 
 import Common.AlgoritmType;
+import Common.OptimizationFunctions;
 import Common.Parameters;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class Main {
     private static double CR = 0.3;
     private static int PopulationCount = 20;
     private static int Generations = 50;
+    private static OptimizationFunctions fun = OptimizationFunctions.Rosenbrock;
 
     public static void main(String[] args) {
         Socket socket;
@@ -21,7 +23,7 @@ public class Main {
         boolean isConnected = false;
         double[][] outputArray = new double[PopulationCount][3];
         Parameters parameters;
-        parameters = new Parameters(F, CR, PopulationCount, Generations, AlgoritmType.DE, false);
+        parameters = new Parameters(F, CR, PopulationCount, Generations, AlgoritmType.DE, false, fun);
 
         //sending parameters
         System.out.printf("Waiting for connector...");

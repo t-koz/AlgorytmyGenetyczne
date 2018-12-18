@@ -1,5 +1,7 @@
 package AlgorithmDE;
 
+import Common.OptimizationFunctions;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,17 +15,20 @@ public class Generation {
     private double CR;
     private int PopulationCount;
     private int Repeats;
+    private OptimizationFunctions functionType;
+
     DecimalFormat df = new DecimalFormat("+#,##0.0000000000;-#");
 
     public List<Point> getActualPopulation() {
         return InitialPopulation;
     }
 
-    public Generation(double F, double CR, int PopulationCount, int Repeats) {
+    public Generation(double F, double CR, int PopulationCount, int Repeats, OptimizationFunctions functionType) {
         this.F = F;
         this.CR = CR;
         this.PopulationCount = PopulationCount;
         this.Repeats = Repeats;
+        this.functionType = functionType;
     }
 
     public void GenerateResultPopulation() {
@@ -44,13 +49,23 @@ public class Generation {
     private List<Point> Selection() {
         List<Point> tempList = new ArrayList<>();
         for (int i = 0; i < PopulationCount; i++) {
-            if (Math.abs(InitialPopulation.get(i).getRosenBrock()) < Math.abs(AfterCrossGeneration.get(i).getRosenBrock())) {
-                tempList.add(InitialPopulation.get(i));
-            } else {
-                tempList.add(AfterCrossGeneration.get(i));
-            }
+            tempList.add(SaveBetterUnit(InitialPopulation.get(i), AfterCrossGeneration.get(i), functionType));
         }
         return tempList;
+    }
+
+    private Point SaveBetterUnit(Point point1, Point point2, OptimizationFunctions functionType) {
+        switch (functionType){
+            case Rosenbrock:
+                if (Math.abs(point1.getResult(functionType) < Math.abs(point2.getResult(functionType)){
+                    return point1;
+                }return point2;
+                break;
+            case Beale:
+                if (Math.abs(point1.getResult(functionType)) < Math.abs(point2.getResult(functionType))){
+                    return point1;
+                }return point2;
+        }
     }
 
     private void CrossGeneration() {
