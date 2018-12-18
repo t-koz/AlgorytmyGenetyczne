@@ -24,14 +24,15 @@ class Main {
             try {
                 serverSocket = new ServerSocket(4335);
                 socket = serverSocket.accept();
-                System.out.printf("Connected to Connector!");
+                System.out.println("Connected to Connector!");
                 isConnected = true;
                 inputStream = new ObjectInputStream(socket.getInputStream());
                 parameters = (Parameters) inputStream.readObject();
-                //TODO: generate new population and copy it to array
+                System.out.println("Generating results population...");
                 resultGetter = new ResultGetter(parameters);
                 outputArray = resultGetter.GetOutputPopulationInArray();
                 //sending result
+                System.out.println("Sending results to Connector!");
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(outputArray);
                 socket.close();

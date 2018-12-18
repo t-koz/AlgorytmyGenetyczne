@@ -6,6 +6,7 @@ import Common.Parameters;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -24,38 +25,44 @@ public class Main {
         Parameters parameters;
         parameters = new Parameters(F, CR, PopulationCount, Generations, AlgoritmType.DE, false);
 
+        //sending parameters
+        System.out.printf("Waiting for connector...");
         while (!isConnected){
             try{
                 socket = new Socket("localHost", 4445);
                 System.out.println("Connected with Connector!");
                 isConnected = true;
-                //sending parameters
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(parameters);
-                //receive result
-                //TODO: Make waitForResult method
-                Thread.sleep(5000);
-                socket = new Socket("localHost", 4665);
-                inputStream = new ObjectInputStream(socket.getInputStream());
-                outputArray = (double[][]) inputStream.readObject();
                 socket.close();
                 outputStream.flush();
             }
-            catch (SocketException e){ e.printStackTrace(); }
-            catch (IOException e) { e.printStackTrace(); }
-            catch (ClassNotFoundException e) { e.printStackTrace(); }
-            catch (InterruptedException e) { e.printStackTrace(); }
+            catch (IOException e) { System.out.printf("."); }
         }
+        isConnected = false;
+        System.out.printf("Waiting for results...");
+        //receive result
+        while (!isConnected){
+            try {
+                socket = new Socket("localHost", 4665);
+                System.out.println("Connected to Connector!");
+                isConnected = true;
+                inputStream = new ObjectInputStream(socket.getInputStream());
+                outputArray = (double[][]) inputStream.readObject();
+                socket.close();
+            }
+            catch (IOException e) { System.out.printf("."); }
+            catch (ClassNotFoundException e) { e.printStackTrace(); }
+
+        }
+        System.out.println("Got Results!");
         for (double[] number : outputArray) {
             System.out.println("X = " + number[0] + " Y = " + number[1] + " Result = " + number[2]);
         }
-        double avg = 0;
         double sum = 0;
         for (double[] number : outputArray){
             sum += number[2];
         }
-        avg = sum / PopulationCount;
-        System.out.println(avg);
-
+        System.out.println(sum / PopulationCount);
     }
 }

@@ -59,6 +59,7 @@ public class Connector {
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(parameters);
                 //receiving parameters for client
+                System.out.println("Getting results from DE...");
                 inputStream = new ObjectInputStream(socket.getInputStream());
                 arrayToSendForClient = (double[][]) inputStream.readObject();
                 socket.close();
@@ -80,6 +81,7 @@ public class Connector {
             try {
                 serverSocket = new ServerSocket(4665);
                 socket = serverSocket.accept();
+                System.out.println("Sending Results to Client!");
                 isConnected = true;
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(arrayToSendForClient);
