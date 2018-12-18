@@ -57,14 +57,14 @@ public class Generation {
     private Point SaveBetterUnit(Point point1, Point point2, OptimizationFunctions functionType) {
         switch (functionType){
             case Rosenbrock:
-                if (Math.abs(point1.getResult(functionType) < Math.abs(point2.getResult(functionType)){
+                if (Math.abs(point1.getResult(functionType)) < Math.abs(point2.getResult(functionType))){
                     return point1;
                 }return point2;
-                break;
             case Beale:
                 if (Math.abs(point1.getResult(functionType)) < Math.abs(point2.getResult(functionType))){
                     return point1;
                 }return point2;
+                default: return null;
         }
     }
 
