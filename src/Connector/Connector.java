@@ -14,7 +14,6 @@ public class Connector {
     static boolean isConnected = false;
     static double[][] arrayToSendForClient;
 
-
     public static void main(String[] args) {
         GetParameterFromClient();
         SendParametersToDE();
@@ -91,6 +90,5 @@ public class Connector {
                 e.printStackTrace();
             }
         }
-
     }
 }

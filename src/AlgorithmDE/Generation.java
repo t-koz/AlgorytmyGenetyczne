@@ -1,7 +1,5 @@
 package AlgorithmDE;
 
-import sun.management.Agent;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,8 @@ public class Generation {
     public List<Point> getActualPopulation() {
         return InitialPopulation;
     }
-    public Generation(double F, double CR, int PopulationCount, int Repeats){
+
+    public Generation(double F, double CR, int PopulationCount, int Repeats) {
         this.F = F;
         this.CR = CR;
         this.PopulationCount = PopulationCount;
@@ -29,7 +28,7 @@ public class Generation {
 
     public void GenerateResultPopulation() {
         GenerateRandomPopulation(PopulationCount);
-        for (int i = 0; i < Repeats; i++){
+        for (int i = 0; i < Repeats; i++) {
             MutateGeneration();
             CrossGeneration();
             InitialPopulation = Selection();
@@ -44,10 +43,10 @@ public class Generation {
 
     private List<Point> Selection() {
         List<Point> tempList = new ArrayList<>();
-        for (int i = 0; i < PopulationCount; i++){
-            if (Math.abs(InitialPopulation.get(i).getRosenBrock()) < Math.abs(AfterCrossGeneration.get(i).getRosenBrock())){
+        for (int i = 0; i < PopulationCount; i++) {
+            if (Math.abs(InitialPopulation.get(i).getRosenBrock()) < Math.abs(AfterCrossGeneration.get(i).getRosenBrock())) {
                 tempList.add(InitialPopulation.get(i));
-            }else{
+            } else {
                 tempList.add(AfterCrossGeneration.get(i));
             }
         }
@@ -56,11 +55,10 @@ public class Generation {
 
     private void CrossGeneration() {
         Random random = new Random();
-        for (int i = 0, j = 1; i < PopulationCount - 1; i+=2, j+=2){
-            if (random.nextDouble() <= CR){
+        for (int i = 0, j = 1; i < PopulationCount - 1; i += 2, j += 2) {
+            if (random.nextDouble() <= CR) {
                 CrossTwoPoints(TemporaryPopulation.get(i), TemporaryPopulation.get(j));
-            }
-            else{
+            } else {
                 AfterCrossGeneration.add(TemporaryPopulation.get(i));
                 AfterCrossGeneration.add(TemporaryPopulation.get(j));
             }
@@ -70,7 +68,7 @@ public class Generation {
     private void CrossTwoPoints(Point firstPoint, Point secondPoint) {
         Random random = new Random();
         int locus = random.nextInt(8) + 3;
-        try{
+        try {
 
             String firstX = String.valueOf(df.format(firstPoint.getX())).substring(0, locus) + String.valueOf(df.format(secondPoint.getX())).substring(locus);
             String secondX = String.valueOf(df.format(secondPoint.getX())).substring(0, locus) + String.valueOf(df.format(firstPoint.getX())).substring(locus);
@@ -78,15 +76,15 @@ public class Generation {
             String secondY = String.valueOf(df.format(secondPoint.getY())).substring(0, locus) + String.valueOf(df.format(firstPoint.getY())).substring(locus);
             AfterCrossGeneration.add(new Point(Double.valueOf(firstX), Double.valueOf(firstY)));
             AfterCrossGeneration.add(new Point(Double.valueOf(secondX), Double.valueOf(secondY)));
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             e.printStackTrace();
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
     }
 
     private void MutateGeneration() {
-        for (int i = 0; i < PopulationCount; i++){
+        for (int i = 0; i < PopulationCount; i++) {
             TemporaryPopulation.add(MakeNewMutatedUnit(InitialPopulation.get(i), i));
         }
     }
@@ -95,22 +93,21 @@ public class Generation {
         Random random = new Random();
         int firstIndex = random.nextInt(PopulationCount);
         int secondIndex = random.nextInt(PopulationCount);
-        while (firstIndex == i){
+        while (firstIndex == i) {
             firstIndex = random.nextInt(PopulationCount);
         }
-        while (secondIndex == i || secondIndex == firstIndex){
+        while (secondIndex == i || secondIndex == firstIndex) {
             secondIndex = random.nextInt(PopulationCount);
         }
-        double x = iteratedPoint.getX() + (F*(InitialPopulation.get(firstIndex).getX() - InitialPopulation.get(secondIndex).getX()));
-        double y = iteratedPoint.getY() + (F*(InitialPopulation.get(firstIndex).getY() - InitialPopulation.get(secondIndex).getY()));
+        double x = iteratedPoint.getX() + (F * (InitialPopulation.get(firstIndex).getX() - InitialPopulation.get(secondIndex).getX()));
+        double y = iteratedPoint.getY() + (F * (InitialPopulation.get(firstIndex).getY() - InitialPopulation.get(secondIndex).getY()));
         return new Point(x, y);
     }
 
     private void GenerateRandomPopulation(int Population) {
         Random random = new Random();
-        for (int i = 0; i < Population; i++){
+        for (int i = 0; i < Population; i++) {
             InitialPopulation.add(new Point(random.nextDouble(), random.nextDouble()));
         }
     }
-
 }
