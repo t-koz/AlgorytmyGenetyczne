@@ -14,7 +14,7 @@ public class ResultGetter {
         this.parameters = parameters;
         this.populationCount = parameters.getPopulationCount();
         this.fun = parameters.getFun();
-        generation = new Generation(parameters.getF(), parameters.getCR(), parameters.getPopulationCount(), parameters.getGenerations(), parameters.getFun());
+        generation = new Generation(parameters.getParam1(), parameters.getParam2(), parameters.getPopulationCount(), parameters.getGenerations(), parameters.getFun());
         generation.GenerateResultPopulation();
     }
 

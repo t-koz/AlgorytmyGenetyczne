@@ -10,8 +10,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Main {
-    private static double F = 0.5;
-    private static double CR = 0.3;
+    private static double param1 = 0.5;
+    private static double param2 = 0.3;
     private static int PopulationCount = 20;
     private static int Generations = 50;
     private static OptimizationFunctions fun = OptimizationFunctions.Matyas;
@@ -23,7 +23,7 @@ public class Main {
         boolean isConnected = false;
         double[][] outputArray = new double[PopulationCount][3];
         Parameters parameters;
-        parameters = new Parameters(F, CR, PopulationCount, Generations, AlgoritmType.SA, false, fun);
+        parameters = new Parameters(PopulationCount, Generations, AlgoritmType.DE, false, fun, param1, param2);
 
         //sending parameters
         System.out.printf("Waiting for connector...");

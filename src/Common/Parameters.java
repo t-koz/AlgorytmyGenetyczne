@@ -3,8 +3,8 @@ package Common;
 import java.io.Serializable;
 
 public class Parameters implements Serializable {
-    double F;
-    double CR;
+    double param1;
+    double param2;
     int PopulationCount;
     int Generations;
     AlgoritmType type;
@@ -20,12 +20,12 @@ public class Parameters implements Serializable {
         return PopulationCount;
     }
 
-    public double getF() {
-        return F;
+    public double getParam1() {
+        return param1;
     }
 
-    public double getCR() {
-        return CR;
+    public double getParam2() {
+        return param2;
     }
 
     public int getGenerations() {
@@ -36,9 +36,9 @@ public class Parameters implements Serializable {
         return type;
     }
 
-    public Parameters(double F, double CR, int PopulationCount, int Generations, AlgoritmType type, boolean withGraph, OptimizationFunctions fun) {
-        this.F = F;
-        this.CR = CR;
+    public Parameters(int PopulationCount, int Generations, AlgoritmType type, boolean withGraph, OptimizationFunctions fun, double param1, double param2) {
+        this.param1 = param1;
+        this.param2 = param2;
         this.PopulationCount = PopulationCount;
         this.Generations = Generations;
         this.type = type;
