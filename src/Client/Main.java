@@ -10,8 +10,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Main {
-    private static double param1 = 0.5;
-    private static double param2 = 0.3;
+    private static double param1 = 0.5; //F for DE
+    private static double param2 = 0.3; //CR for DEa
     private static int PopulationCount = 20;
     private static int Generations = 50;
     private static OptimizationFunctions fun = OptimizationFunctions.Matyas;
