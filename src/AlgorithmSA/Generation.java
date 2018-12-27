@@ -24,9 +24,9 @@ public class Generation {
     }
 
     public void GenerateResultPopulation() {
-        GenerateStartPopulation();
+        startList = GenerateRandomPopulation();
         for (int i = 0; i < Repeats; i++){
-            GenerateNewRandomPopulation();
+            tempList = GenerateRandomPopulation();
             startList = SelectBetterUnits();
             SetNewTemperature();
             tempList.clear();
@@ -41,17 +41,15 @@ public class Generation {
         return  null;
     }
 
-    private void GenerateNewRandomPopulation() {
-
-    }
-
-    private void GenerateStartPopulation() {
+    private List<Point> GenerateRandomPopulation() {
+        List<Point> listToReturn = new ArrayList<>();
         Random random = new Random();
         double rangeMax = setRangeForRandomGeneratedNumbers();
         double rangeMin = -rangeMax;
         for (int i = 0; i < PopulationCount; i++){
-            startList.add(new Point(rangeMin +(rangeMax - rangeMin) * random.nextDouble(),rangeMin +(rangeMax - rangeMin) * random.nextDouble()));
+            listToReturn.add(new Point(rangeMin +(rangeMax - rangeMin) * random.nextDouble(),rangeMin +(rangeMax - rangeMin) * random.nextDouble()));
         }
+        return listToReturn;
     }
 
     private double setRangeForRandomGeneratedNumbers() {
