@@ -7,12 +7,14 @@ public class Generation {
     private int Repeats;
     private OptimizationFunctions function;
     private double startTemp;
+    private double newTemperatureMultipler;
 
-    public Generation(int PopulationCount, int Repeats, OptimizationFunctions function, double startTemp){
+    public Generation(int PopulationCount, int Repeats, OptimizationFunctions function, double startTemp, double newTemperatureMultipler){
         this.PopulationCount = PopulationCount;
         this.Repeats = Repeats;
         this.function = function;
         this.startTemp = startTemp;
+        this.newTemperatureMultipler = newTemperatureMultipler;
     }
 
     public void GenerateResultPopulation() {

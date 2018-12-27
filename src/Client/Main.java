@@ -10,9 +10,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Main {
-    private static double param1 = 0.5; //F for DE
-    private static double param2 = 0.3; //CR for DEa
-//    private static double param1 = 2,3; //startTemp for SE
+//    private static double param1 = 0.5; //F for DE, between 0.5 and 0.9
+//    private static double param2 = 0.3; //CR for DEa, between 0 and 1
+    private static double param1 = 2.3; //startTemp for SA
+    private static double param2 = 0.9; //temperature multipler for SA, between 0.85 and 0.95
     private static int PopulationCount = 20;
     private static int Generations = 50;
     private static OptimizationFunctions fun = OptimizationFunctions.Matyas;
