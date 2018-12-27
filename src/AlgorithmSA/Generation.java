@@ -13,6 +13,7 @@ public class Generation {
     private double startTemp;
     private double newTemperatureMultipler;
     private List<Point> startList = new ArrayList<>();
+    private List<Point> tempList = new ArrayList<>();
 
     public Generation(int PopulationCount, int Repeats, OptimizationFunctions function, double startTemp, double newTemperatureMultipler){
         this.PopulationCount = PopulationCount;
@@ -26,8 +27,9 @@ public class Generation {
         GenerateStartPopulation();
         for (int i = 0; i < Repeats; i++){
             GenerateNewRandomPopulation();
-            SelectBetterUnits();
+            startList = SelectBetterUnits();
             SetNewTemperature();
+            tempList.clear();
         }
     }
 
@@ -35,7 +37,8 @@ public class Generation {
         
     }
 
-    private void SelectBetterUnits() {
+    private List<Point> SelectBetterUnits() {
+        return  null;
     }
 
     private void GenerateNewRandomPopulation() {
