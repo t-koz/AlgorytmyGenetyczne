@@ -12,6 +12,11 @@ public class Generation {
     private OptimizationFunctions function;
     private double actualTemp;
     private double newTemperatureMultipler;
+
+    public List<Point> getStartList() {
+        return startList;
+    }
+
     private List<Point> startList = new ArrayList<>();
     private List<Point> tempList = new ArrayList<>();
 
