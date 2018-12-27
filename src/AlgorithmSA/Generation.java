@@ -10,16 +10,16 @@ public class Generation {
     private int PopulationCount;
     private int Repeats;
     private OptimizationFunctions function;
-    private double startTemp;
+    private double actualTemp;
     private double newTemperatureMultipler;
     private List<Point> startList = new ArrayList<>();
     private List<Point> tempList = new ArrayList<>();
 
-    public Generation(int PopulationCount, int Repeats, OptimizationFunctions function, double startTemp, double newTemperatureMultipler){
+    public Generation(int PopulationCount, int Repeats, OptimizationFunctions function, double actualTemp, double newTemperatureMultipler){
         this.PopulationCount = PopulationCount;
         this.Repeats = Repeats;
         this.function = function;
-        this.startTemp = startTemp;
+        this.actualTemp = actualTemp;
         this.newTemperatureMultipler = newTemperatureMultipler;
     }
 
@@ -38,7 +38,24 @@ public class Generation {
     }
 
     private List<Point> SelectBetterUnits() {
-        return  null;
+        List<Point> newGenerationList = new ArrayList<>();
+        Random random = new Random();
+        double currentResult;
+        double randomDouble;
+        for (int i = 0; i < PopulationCount; i++) {
+            currentResult = tempList.get(i).getResult(function) - startList.get(i).getResult(function);
+            if (currentResult < 0){
+                newGenerationList.add(tempList.get(i));
+            }else {
+                randomDouble = random.nextDouble();
+                if (randomDouble < Math.exp((-currentResult) / actualTemp)){
+                    newGenerationList.add(tempList.get(i));
+                }else {
+                    newGenerationList.add(startList.get(i));
+                }
+            }
+        }
+        return newGenerationList;
     }
 
     private List<Point> GenerateRandomPopulation() {
