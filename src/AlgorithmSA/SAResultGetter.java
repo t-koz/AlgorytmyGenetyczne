@@ -13,7 +13,7 @@ public class SAResultGetter {
         this.populationCount = parameters.getPopulationCount();
         this.fun = parameters.getFun();
         //TODO: pass arguments to new generation
-        Generation generation = new Generation();
+        Generation generation = new Generation(parameters.getPopulationCount(), parameters.getGenerations(), parameters.getFun(), parameters.getParam1());
         generation.GenerateResultPopulation();
     }
 

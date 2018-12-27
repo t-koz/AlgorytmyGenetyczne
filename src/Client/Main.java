@@ -12,6 +12,7 @@ import java.net.Socket;
 public class Main {
     private static double param1 = 0.5; //F for DE
     private static double param2 = 0.3; //CR for DEa
+//    private static double param1 = 2,3; //startTemp for SE
     private static int PopulationCount = 20;
     private static int Generations = 50;
     private static OptimizationFunctions fun = OptimizationFunctions.Matyas;
@@ -23,7 +24,7 @@ public class Main {
         boolean isConnected = false;
         double[][] outputArray = new double[PopulationCount][3];
         Parameters parameters;
-        parameters = new Parameters(PopulationCount, Generations, AlgoritmType.DE, false, fun, param1, param2);
+        parameters = new Parameters(PopulationCount, Generations, AlgoritmType.SA, false, fun, param1, param2);
 
         //sending parameters
         System.out.printf("Waiting for connector...");
