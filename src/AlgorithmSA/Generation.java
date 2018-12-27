@@ -28,13 +28,13 @@ public class Generation {
         for (int i = 0; i < Repeats; i++){
             tempList = GenerateRandomPopulation();
             startList = SelectBetterUnits();
-            SetNewTemperature();
+            actualTemp = SetNewTemperature();
             tempList.clear();
         }
     }
 
-    private void SetNewTemperature() {
-        
+    private double SetNewTemperature() {
+        return actualTemp * newTemperatureMultipler;
     }
 
     private List<Point> SelectBetterUnits() {
