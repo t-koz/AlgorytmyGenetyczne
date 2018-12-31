@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Random;
 
 public class Generation {
-    private List<Point> InitialPopulation = new ArrayList<>();
-    private List<Point> TemporaryPopulation = new ArrayList<>();
-    private List<Point> AfterCrossGeneration = new ArrayList<>();
+    private List<Point> InitialPopulation = new ArrayList();
+    private List<Point> TemporaryPopulation = new ArrayList();
+    private List<Point> AfterCrossGeneration = new ArrayList();
     private double F;
     private double CR;
     private int PopulationCount;
@@ -47,7 +47,7 @@ public class Generation {
     }
 
     private List<Point> Selection() {
-        List<Point> tempList = new ArrayList<>();
+        List<Point> tempList = new ArrayList();
         for (int i = 0; i < PopulationCount; i++) {
             tempList.add(SaveBetterUnit(InitialPopulation.get(i), AfterCrossGeneration.get(i), functionType));
         }

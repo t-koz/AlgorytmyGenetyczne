@@ -17,8 +17,8 @@ public class Generation {
         return startList;
     }
 
-    private List<Point> startList = new ArrayList<>();
-    private List<Point> tempList = new ArrayList<>();
+    private List<Point> startList = new ArrayList();
+    private List<Point> tempList = new ArrayList();
 
     public Generation(int PopulationCount, int Repeats, OptimizationFunctions function, double actualTemp, double newTemperatureMultipler){
         this.PopulationCount = PopulationCount;
@@ -43,7 +43,7 @@ public class Generation {
     }
 
     private List<Point> SelectBetterUnits() {
-        List<Point> newGenerationList = new ArrayList<>();
+        List<Point> newGenerationList = new ArrayList();
         Random random = new Random();
         double currentResult;
         double randomDouble;
@@ -64,7 +64,7 @@ public class Generation {
     }
 
     private List<Point> GenerateRandomPopulation() {
-        List<Point> listToReturn = new ArrayList<>();
+        List<Point> listToReturn = new ArrayList();
         Random random = new Random();
         double rangeMax = setRangeForRandomGeneratedNumbers();
         double rangeMin = -rangeMax;
