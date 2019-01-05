@@ -39,7 +39,7 @@ public class Connector {
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(arrayToSendForClient);
                 //receiving parameters for client
-                System.out.println("Getting results from Drawer");
+                System.out.println("Sending results from Drawer");
                 inputStream = new ObjectInputStream(socket.getInputStream());
                 arrayToSendForClient = (double[][]) inputStream.readObject();
                 socket.close();
@@ -51,6 +51,7 @@ public class Connector {
             }
         }
         isConnected = false;
+        System.out.println("Getting plot from Drawer...");
         while (!isConnected){
             try {
                 socket = new Socket("localhost", 5855);
@@ -58,7 +59,7 @@ public class Connector {
                 jf = (JFrame) inputStream.readObject();
                 socket.close();
             }catch (IOException e){
-                e.printStackTrace();
+                System.out.printf(".");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

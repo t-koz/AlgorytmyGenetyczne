@@ -6,6 +6,7 @@ import net.ericaro.surfaceplotter.JSurfacePanel;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -26,7 +27,7 @@ public class Drawer {
     public void testSomething() {
         JSurfacePanel jsp = new JSurfacePanel();
         jsp.setTitleText("lll");
-
+        jf = new JFrame();
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.getContentPane().add(jsp, BorderLayout.CENTER);
         jf.pack();
@@ -74,6 +75,7 @@ public class Drawer {
     }
 
     private static void GetResults() {
+        System.out.println("Getting results from Connector");
         while (!isConnected){
             try{
                 serverSocket = new ServerSocket(5555);
@@ -93,7 +95,7 @@ public class Drawer {
 
     private static void SendJFrame() {
         isConnected = false;
-        System.out.println("Getting JFrame from drawer");
+        System.out.println("Sending JSurfacePanel to Connector");
         while (!isConnected){
             try{
                 serverSocket = new ServerSocket(5855);
@@ -104,6 +106,8 @@ public class Drawer {
                 objectOutputStream.writeObject(jf);
                 socket.close();
                 objectOutputStream.flush();
+            }catch (NotSerializableException e){
+                e.printStackTrace();
             }catch (IOException e) {
                 System.out.printf(".");
             }
