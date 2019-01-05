@@ -1,7 +1,9 @@
 package Connector;
 
+import Common.AlgoritmType;
 import Common.Parameters;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -13,11 +15,54 @@ public class Connector {
     static Parameters parameters;
     static boolean isConnected = false;
     static double[][] arrayToSendForClient;
+    static JFrame jf;
+
 
     public static void main(String[] args) {
         GetParameterFromClient();
         SendParametersToCorrectAlgorithm();
-        SendResultToClient();
+        SendResult(4665);
+        ConnectToDrawer(5555);
+        jf.setVisible(true);
+    }
+
+    private static void ConnectToDrawer(int port) {
+        isConnected = false;
+        Socket socket;
+        ObjectOutputStream outputStream;
+        ObjectInputStream inputStream;
+        while (!isConnected) {
+            try {
+                socket = new Socket("localhost", port);
+                System.out.println("Connected to Drawer");
+                isConnected = true;
+                outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.writeObject(arrayToSendForClient);
+                //receiving parameters for client
+                System.out.println("Getting results from Drawer");
+                inputStream = new ObjectInputStream(socket.getInputStream());
+                arrayToSendForClient = (double[][]) inputStream.readObject();
+                socket.close();
+                outputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        isConnected = false;
+        while (!isConnected){
+            try {
+                socket = new Socket("localhost", 5855);
+                inputStream = new ObjectInputStream(socket.getInputStream());
+                jf = (JFrame) inputStream.readObject();
+                socket.close();
+            }catch (IOException e){
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void GetParameterFromClient() {
@@ -49,16 +94,8 @@ public class Connector {
         Socket socket;
         ObjectOutputStream outputStream;
         ObjectInputStream inputStream;
-        int port = 0;
-        switch (parameters.GetAlgoritmType()){
-            case DE:
-                port = 4335;
-                break;
-            case SA:
-                port = 4993;
-                break;
-        }
 
+        int port = SetPropertyPort(parameters.GetAlgoritmType());
         while (!isConnected) {
             try {
                 socket = new Socket("localhost", port);
@@ -73,21 +110,31 @@ public class Connector {
                 socket.close();
                 outputStream.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.printf(".");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private static void SendResultToClient() {
+    private static int SetPropertyPort(AlgoritmType algoritmType) {
+        switch (algoritmType){
+            case DE:
+                return  4335;
+            case SA:
+                return  4993;
+                default: return 4335;
+        }
+    }
+
+    private static void SendResult(int port) {
         ServerSocket serverSocket;
         isConnected = false;
         Socket socket;
         ObjectOutputStream outputStream;
         while (!isConnected) {
             try {
-                serverSocket = new ServerSocket(4665);
+                serverSocket = new ServerSocket(port);
                 socket = serverSocket.accept();
                 System.out.println("Sending Results to Client!");
                 isConnected = true;
@@ -95,6 +142,7 @@ public class Connector {
                 outputStream.writeObject(arrayToSendForClient);
                 socket.close();
                 outputStream.flush();
+                serverSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

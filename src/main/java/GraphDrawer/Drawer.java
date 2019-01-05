@@ -5,16 +5,28 @@ import net.ericaro.surfaceplotter.JSurfacePanel;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Random;
 
 
 public class Drawer {
+    static ServerSocket serverSocket;
+    static Socket socket;
+    static boolean isConnected = false;
+    static ObjectInputStream objectInputStream;
+    static ObjectOutputStream objectOutputStream;
+    static double [][] results;
+    static JFrame jf;
+
 
     public void testSomething() {
         JSurfacePanel jsp = new JSurfacePanel();
         jsp.setTitleText("lll");
 
-        JFrame jf = new JFrame("test");
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.getContentPane().add(jsp, BorderLayout.CENTER);
         jf.pack();
@@ -34,7 +46,7 @@ public class Drawer {
             }
         }
         ArraySurfaceModel sm = new ArraySurfaceModel();
-        sm.setValues(0f,1000f,0f,1000f,max, z1, z2);
+        sm.setValues(0f,1000f,0f,1000f, max, z1, z2);
         jsp.setModel(sm);
         sm.doRotate();
     }
@@ -51,13 +63,51 @@ public class Drawer {
     }
 
     public static void main(String[] args) {
+        GetResults();
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
                 new Drawer().testSomething();
             }
         });
+        SendJFrame();
+    }
 
+    private static void GetResults() {
+        while (!isConnected){
+            try{
+                serverSocket = new ServerSocket(5555);
+                socket = serverSocket.accept();
+                System.out.println("Connected to Connector!");
+                isConnected = true;
+                objectInputStream = new ObjectInputStream(socket.getInputStream());
+                results = (double[][]) objectInputStream.readObject();
+                socket.close();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }catch (ClassNotFoundException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void SendJFrame() {
+        isConnected = false;
+        System.out.println("Getting JFrame from drawer");
+        while (!isConnected){
+            try{
+                serverSocket = new ServerSocket(5855);
+                socket = serverSocket.accept();
+                System.out.println("Connected to Connector!");
+                isConnected = true;
+                objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                objectOutputStream.writeObject(jf);
+                socket.close();
+                objectOutputStream.flush();
+            }catch (IOException e) {
+                System.out.printf(".");
+            }
+        }
     }
 
 }
