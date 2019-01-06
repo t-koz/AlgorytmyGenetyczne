@@ -56,9 +56,9 @@ public class Connector {
                 socket = new Socket("localhost", 5855);
                 isConnected = true;
                 BufferedImage img = ImageIO.read(ImageIO.createImageInputStream(socket.getInputStream()));
-                File outputFile = new File("wykres.jpg");
+                File outputFile = new File("wykres.png");
                 try {
-                    ImageIO.write(img, "jpg", outputFile);
+                    ImageIO.write(img, "png", outputFile);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

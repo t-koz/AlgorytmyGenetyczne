@@ -16,7 +16,6 @@ public class Main {
     private static double param2 = 0.9; //temperature multipler for SA, between 0.85 and 0.95
     private static int PopulationCount = 20;
     private static int Generations = 50;
-    private static OptimizationFunctions fun = OptimizationFunctions.Matyas;
 
     public static void main(String[] args) {
         Socket socket;
@@ -25,7 +24,7 @@ public class Main {
         boolean isConnected = false;
         double[][] outputArray = new double[PopulationCount][3];
         Parameters parameters;
-        parameters = new Parameters(PopulationCount, Generations, AlgoritmType.SA, true, fun, param1, param2);
+        parameters = new Parameters(PopulationCount, Generations, AlgoritmType.DE, true, OptimizationFunctions.Booth, param1, param2);
 
         //sending parameters
         System.out.printf("Waiting for connector...");

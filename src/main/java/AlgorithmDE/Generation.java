@@ -17,7 +17,7 @@ public class Generation {
     private int Repeats;
     private OptimizationFunctions functionType;
 
-    DecimalFormat df = new DecimalFormat("+#,##0.0000000000;-#");
+    DecimalFormat df = new DecimalFormat("+#,##000.0000000000;-#");
 
     public List<Point> getActualPopulation() {
         return InitialPopulation;
@@ -74,7 +74,7 @@ public class Generation {
 
     private void CrossTwoPoints(Point firstPoint, Point secondPoint) {
         Random random = new Random();
-        int locus = random.nextInt(8) + 3;
+        int locus = random.nextInt(10) + 5;
         try {
 
             String firstX = String.valueOf(df.format(firstPoint.getX())).substring(0, locus) + String.valueOf(df.format(secondPoint.getX())).substring(locus);
