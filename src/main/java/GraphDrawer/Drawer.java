@@ -3,12 +3,11 @@ package GraphDrawer;
 import net.ericaro.surfaceplotter.JSurfacePanel;
 
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.BorderLayout;
-import java.io.IOException;
-import java.io.NotSerializableException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Random;
@@ -22,18 +21,18 @@ public class Drawer {
     static ObjectOutputStream objectOutputStream;
     static double [][] results;
     static JFrame jf;
+    static BufferedImage img = new BufferedImage(800, 800, BufferedImage.TYPE_INT_RGB);
 
-
-    public void testSomething() {
+    public static void testSomething() {
         JSurfacePanel jsp = new JSurfacePanel();
         jsp.setTitleText("lll");
         jf = new JFrame();
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.getContentPane().add(jsp, BorderLayout.CENTER);
         jf.pack();
-        jf.setSize(500, 500);
+        jf.setSize(800, 800);
         jf.setVisible(true);
-//
+
         Random rand = new Random();
         int max = 100;
         int max1 = 100;
@@ -48,8 +47,11 @@ public class Drawer {
         }
         ArraySurfaceModel sm = new ArraySurfaceModel();
         sm.setValues(0f,1000f,0f,1000f, max, z1, z2);
-        jsp.setModel(sm);
         sm.doRotate();
+        jsp.setModel(sm);
+        jf.paint(img.getGraphics());
+        jf.setVisible(false);
+        jf.dispose();
     }
 
     public static float f1(float x, float y) {
@@ -65,16 +67,12 @@ public class Drawer {
 
     public static void main(String[] args) {
         GetResults();
-        SwingUtilities.invokeLater(new Runnable() {
-
-            public void run() {
-                new Drawer().testSomething();
-            }
-        });
+        testSomething();
         SendJFrame();
     }
 
     private static void GetResults() {
+        isConnected = false;
         System.out.println("Getting results from Connector");
         while (!isConnected){
             try{
@@ -95,17 +93,15 @@ public class Drawer {
 
     private static void SendJFrame() {
         isConnected = false;
-        System.out.println("Sending JSurfacePanel to Connector");
+        System.out.println("Sending Screenshot to Connector");
         while (!isConnected){
             try{
                 serverSocket = new ServerSocket(5855);
                 socket = serverSocket.accept();
                 System.out.println("Connected to Connector!");
                 isConnected = true;
-                objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                objectOutputStream.writeObject(jf);
+                ImageIO.write(img,"jpg", socket.getOutputStream());
                 socket.close();
-                objectOutputStream.flush();
             }catch (NotSerializableException e){
                 e.printStackTrace();
             }catch (IOException e) {

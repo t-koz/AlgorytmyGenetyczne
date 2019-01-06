@@ -3,7 +3,10 @@ package Connector;
 import Common.AlgoritmType;
 import Common.Parameters;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -23,7 +26,6 @@ public class Connector {
         SendParametersToCorrectAlgorithm();
         SendResult(4665);
         ConnectToDrawer(5555);
-        jf.setVisible(true);
     }
 
     private static void ConnectToDrawer(int port) {
@@ -39,7 +41,7 @@ public class Connector {
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(arrayToSendForClient);
                 //receiving parameters for client
-                System.out.println("Sending results from Drawer");
+                System.out.println("Sending results to Drawer");
                 inputStream = new ObjectInputStream(socket.getInputStream());
                 arrayToSendForClient = (double[][]) inputStream.readObject();
                 socket.close();
@@ -55,13 +57,17 @@ public class Connector {
         while (!isConnected){
             try {
                 socket = new Socket("localhost", 5855);
-                inputStream = new ObjectInputStream(socket.getInputStream());
-                jf = (JFrame) inputStream.readObject();
+                isConnected = true;
+                BufferedImage img = ImageIO.read(ImageIO.createImageInputStream(socket.getInputStream()));
+                File outputFile = new File("wykres.jpg");
+                try {
+                    ImageIO.write(img, "jpg", outputFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 socket.close();
             }catch (IOException e){
                 System.out.printf(".");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }
     }
