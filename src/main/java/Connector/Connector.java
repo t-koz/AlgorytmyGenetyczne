@@ -4,7 +4,6 @@ import Common.AlgoritmType;
 import Common.Parameters;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,13 +17,11 @@ public class Connector {
     static Parameters parameters;
     static boolean isConnected = false;
     static double[][] arrayToSendForClient;
-    static JFrame jf;
-
 
     public static void main(String[] args) {
         GetParameterFromClient();
         SendParametersToCorrectAlgorithm();
-        SendResult(4665);
+        SendDataToClient(4665);
         ConnectToDrawer(5555);
     }
 
@@ -134,7 +131,7 @@ public class Connector {
         }
     }
 
-    private static void SendResult(int port) {
+    private static void SendDataToClient(int port) {
         ServerSocket serverSocket;
         isConnected = false;
         Socket socket;
