@@ -5,6 +5,7 @@ import Common.Parameters;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -66,9 +67,11 @@ public class Connector {
                 arrayToSendForClient = (double[][]) inputStream.readObject();
                 socket.close();
                 outputStream.flush();
-            } catch (IOException e) {
+            }catch (EOFException e){
+                System.out.println("Results sended to Drawer!");
+            }catch (IOException e) {
                 e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            }catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }

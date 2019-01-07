@@ -5,6 +5,8 @@ import Common.OptimizationFunctions;
 import Common.Parameters;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +34,16 @@ public class Main {
         RecieveResultDataFromConnector(4665);
         PrintResultsData();
         RecievePlotFromConnector(isWithGraph, 5454);
+        ShowImage();
+    }
 
+    private static void ShowImage() {
+        JFrame screen = new JFrame("Plot");
+        screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        screen.setSize(800, 800);
+        screen.getContentPane().setLayout(new FlowLayout());
+        screen.getContentPane().add(new JLabel(new ImageIcon(img)));
+        screen.setVisible(true);
     }
 
     private static void SendParametersToConnector(Parameters parameters, int port) {
@@ -43,7 +54,7 @@ public class Main {
         while (!isConnected) {
             try {
                 socket = new Socket("localHost", port);
-                System.out.println("Connected with Connector!");
+                System.out.println("Getting plot!");
                 isConnected = true;
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(parameters);
