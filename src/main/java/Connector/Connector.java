@@ -5,7 +5,6 @@ import Common.Parameters;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,12 +16,36 @@ public class Connector {
     static Parameters parameters;
     static boolean isConnected = false;
     static double[][] arrayToSendForClient;
+    static BufferedImage img = new BufferedImage(800, 800, BufferedImage.TYPE_INT_RGB);
 
     public static void main(String[] args) {
         GetParameterFromClient();
         SendParametersToCorrectAlgorithm();
         SendDataToClient(4665);
         ConnectToDrawer(5555);
+        if (parameters.isWithGraph()){
+            SendImageToClient(5454);
+        }
+    }
+
+    private static void SendImageToClient(int port) {
+        ServerSocket serverSocket;
+        isConnected = false;
+        Socket socket;
+        while (!isConnected) {
+            try {
+                serverSocket = new ServerSocket(port);
+                socket = serverSocket.accept();
+                System.out.println("Sending Results to Client!");
+                isConnected = true;
+                ImageIO.write(img, "png", socket.getOutputStream());
+                socket.close();
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private static void ConnectToDrawer(int port) {
@@ -55,13 +78,7 @@ public class Connector {
             try {
                 socket = new Socket("localhost", 5855);
                 isConnected = true;
-                BufferedImage img = ImageIO.read(ImageIO.createImageInputStream(socket.getInputStream()));
-                File outputFile = new File("wykres.png");
-                try {
-                    ImageIO.write(img, "png", outputFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                img = ImageIO.read(ImageIO.createImageInputStream(socket.getInputStream()));
                 socket.close();
             }catch (IOException e){
                 System.out.printf(".");

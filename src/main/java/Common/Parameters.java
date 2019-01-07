@@ -28,6 +28,10 @@ public class Parameters implements Serializable {
         return param2;
     }
 
+    public boolean isWithGraph() {
+        return withGraph;
+    }
+
     public int getGenerations() {
         return Generations;
     }

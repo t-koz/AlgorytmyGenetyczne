@@ -42,7 +42,7 @@ public class Drawer {
     public static void main(String[] args) {
         GetResults();
         drawPlot();
-        SendJFrame();
+        SendImage();
     }
 
     private static void GetResults() {
@@ -65,7 +65,7 @@ public class Drawer {
         }
     }
 
-    private static void SendJFrame() {
+    private static void SendImage() {
         isConnected = false;
         System.out.println("Sending Screenshot to Connector");
         while (!isConnected){
@@ -76,6 +76,7 @@ public class Drawer {
                 isConnected = true;
                 ImageIO.write(img,"png", socket.getOutputStream());
                 socket.close();
+                serverSocket.close();
             }catch (NotSerializableException e){
                 e.printStackTrace();
             }catch (IOException e) {
