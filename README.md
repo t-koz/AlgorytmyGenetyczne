@@ -1,0 +1,1 @@
+Sprawozdanie dostępne w pliku ReadMe.pdf
